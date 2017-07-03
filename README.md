@@ -30,17 +30,18 @@ Error level             | int       | E_ALL        | set the error level type
 
 ## log function Parameter
 
-Name       | Type      | Default      | Description
------------| --------- | ------------ | ------------
-Type       | string    | Error        | Just the status, this doesn't change
-log_object | array     | 524288       | The log object can be used to store important information. It is a global variable. If an error occure everything in $log_object will be transmitted to the logging function.
-dataset    | array     | true         | In the dataset are the information about the error. Also in the dataset are information from $log_info to store information about the process where the error occure. $log_info is a global variable
+Name       | Type      | Description
+-----------| --------- | ------------
+Type       | string    | Just the status, this doesn't change
+log_object | array     | The log object can be used to store important information. It is a global variable. If an error occure everything in $log_object will be transmitted to the logging function.
+dataset    | array     | In the dataset are the information about the error. Also in the dataset are information from $log_info to store information about the process where the error occure. $log_info is a global variable
 
 ## Log Example
 ```php
-include('mw-php-error.php')
+//init error handler
+include('../src/mw-php-error.php');
 error_init('logging');
- 
+
 function logging($type, $log_object, $dataset){
     //write into log file
     $myfile = fopen("log.txt", "a");
@@ -48,14 +49,14 @@ function logging($type, $log_object, $dataset){
         "date" => date("Y-m-d H:i:s"),
         "log_object" => $log_object,
         "dataset" => $dataset
-    ]);
+    ]).PHP_EOL;
     fwrite($myfile, $text);
     fclose($myfile);
-    
+
     //response with a clean text
     $response = [
         'type' => 'warning',
-    	'text' => 'An error occured'
+        'text' => 'An error occured'
     ];
     echo json_encode($response);
 }
