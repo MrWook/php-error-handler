@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="../../../../../xampp/htdocs/php_error_handler/client.js"></script>
+	</head>
+	<body>
+		<div>
+			<button id="timeout" onclick="send_ajax('timeout')">timeout</button>
+			<button id="overflow" onclick="send_ajax('overflow')">overflow</button>
+			<button id="error" onclick="send_ajax('error')">error</button>
+			<button id="error_with_parameter" onclick="send_ajax('error_with_parameter')">error with parameter</button>
+			<button id="exception" onclick="send_ajax('exception')">exception</button>
+		</div>
+		<pre id="message"></pre>
+	</body>
+</html>
+
+<script>
+function send_ajax(type){
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState === 4) {
+			document.getElementById("message").innerHTML =
+				this.responseText;
+		}
+	};
+	xhttp.open("POST", "server.php", true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send("type="+type);
+}
+</script>
