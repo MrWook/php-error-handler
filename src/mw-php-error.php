@@ -1,6 +1,6 @@
 <?php
 	/**
-	 * @version 1.0.0
+	 * @version 1.0.1
 	 * @license MIT
 	 * @author MrWook
 	 */
@@ -43,6 +43,9 @@
 	//  Pass errors up to the global ErrorHandler to be later inserted into
 	function handle_runtime_error($error_lvl, $error_msg, $error_file = null, $error_line = null, $error_context = null){
 		$GLOBALS['ErrorHandler']->log_error($error_lvl, "Runtime Error: " . $error_msg, $error_file, $error_line, $error_context);
+		if(!headers_sent()){
+			header("HTTP/1.1 500");
+		}
 		//return true when the error should not be shown, return false when the error should be shown
 		return !$GLOBALS['ErrorHandler']->error_show;
 	}
@@ -56,15 +59,6 @@
 			exit();
 		else{
 			handle_runtime_error($error['type'], "Fatal Error: " . $error['message'], $error['file'], $error['line']);
-			if(!headers_sent()){
-				if($GLOBALS['ErrorHandler']->error_show){
-					header("HTTP/1.1 500");
-				}else{
-					header("HTTP/1.1 200");
-				}
-			}
-
-			return !$GLOBALS['ErrorHandler']->error_show;
 		}
 	}
 	// Parse and pass exceptions up to the standard error callback.
