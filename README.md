@@ -25,7 +25,7 @@ Name                    | Type      | Default      | Description
 Log function            | string    | No default   | Set the log function name which should be used when an error occurred
 Memory                  | int       | 524288       | set the internal error memory save for php overflows if the $log_object or the $log_info is to big it need to be increased
 Reporting               | boolean   | true         | set if the custom handling should be activated need to be true to log the error's
-Show error              | boolean   | false        | set if the PHP errors should be shown on the website
+Show error              | boolean   | false        | set if the PHP errors traces should be shown on the website
 Error level             | int       | E_ALL        | set the error level type
 
 ## log function Parameter
